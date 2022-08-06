@@ -1,0 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('img/background.png');
+  background-size: 700px;
+  background-clip: content-box;
+}
