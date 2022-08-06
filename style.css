@@ -3,7 +3,78 @@
 }
 
 body {
+  margin: 0;
+  border-color: aquamarine;
+}
+
+.container {
+  position: relative;
+  background-color: bisque;
   background-image: url('img/background.png');
-  background-size: 700px;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-clip: content-box;
+  height: 500px;
+  margin: auto;
+}
+
+.information {
+  position: absolute;
+  left: 45%;
+  top: 5%;
+  margin: auto;
+  width: 100px;
+  height: 120px;
+  background-color: cadetblue;
+  display: block;
+  text-align: center;
+}
+
+.information__btn-play {
+  margin-bottom: 10px;
+}
+
+.information__btn-stop {
+  display: none;
+}
+
+.information__timer {
+  margin: auto;
+  margin-bottom: 10px;
+  border: 1px solid whitesmoke;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.information__num-remain {
+  border: 1px solid whitesmoke;
+  margin: auto;
+  padding: 3px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.notice {
+  position: absolute;
+  left: 40%;
+  top: 50%;
+  margin: auto;
+  width: 250px;
+  height: 100px;
+  background-color: rgba(169, 169, 169, 0.5);
+  display: block;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.notice__replay {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.notice__text {
+  font-size: 30px;
+  opacity: 100%;
 }
