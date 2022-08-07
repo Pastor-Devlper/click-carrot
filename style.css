@@ -9,12 +9,12 @@ body {
 
 .container {
   position: relative;
-  background-color: bisque;
   background-image: url('img/background.png');
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-clip: content-box;
-  height: 500px;
+  width: 100%;
+  height: 700px;
   margin: auto;
 }
 
@@ -24,47 +24,55 @@ body {
   top: 5%;
   margin: auto;
   width: 100px;
-  height: 120px;
-  background-color: cadetblue;
   display: block;
   text-align: center;
 }
 
 .information__btn-play {
   margin-bottom: 10px;
+  font-size: 32px;
+  border-radius: 10px;
 }
 
 .information__btn-stop {
   display: none;
+  margin-bottom: 10px;
+  font-size: 32px;
+  border-radius: 10px;
 }
 
 .information__timer {
   margin: auto;
   margin-bottom: 10px;
-  border: 1px solid whitesmoke;
+  border: 2px solid black;
   width: fit-content;
-  padding: 5px;
+  padding: 5px 20px;
   border-radius: 5px;
+  font-size: 24px;
+  background-color: whitesmoke;
 }
 
 .information__num-remain {
-  border: 1px solid whitesmoke;
+  border: 2px solid black;
   margin: auto;
   padding: 3px;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   border-radius: 50%;
+  font-size: 24px;
+  background-color: burlywood;
 }
 
 .notice {
+  display: none;
   position: absolute;
   left: 40%;
   top: 50%;
   margin: auto;
   width: 250px;
   height: 100px;
-  background-color: rgba(169, 169, 169, 0.5);
-  display: block;
+  background-color: rgba(169, 169, 169, 0.7);
   text-align: center;
   border-radius: 20px;
 }
@@ -77,4 +85,16 @@ body {
 .notice__text {
   font-size: 30px;
   opacity: 100%;
+}
+
+img[alt='bug01'] {
+  position: absolute;
+  left: 500px;
+  top: 300px;
+}
+
+img[alt='carrot01'] {
+  position: absolute;
+  left: 300px;
+  top: 400px;
 }
