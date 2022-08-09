@@ -53,7 +53,7 @@ body {
   background-color: whitesmoke;
 }
 
-.information__num-remain {
+.information__counter {
   border: 2px solid black;
   margin: auto;
   padding: 3px;

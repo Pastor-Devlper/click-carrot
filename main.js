@@ -41,21 +41,29 @@ function timer() {
       sec--;
     }
   }, 1000);
+
+  // carrot clicked:
+  // 1. erase it
+  const area = document.querySelector('.targets');
+  area.addEventListener('click', (e) => {
+    if (carrots.includes(e.target)) {
+      e.target.remove();
+      countDown();
+    } else if (bugs.includes(e.target)) {
+      lost();
+    }
+  });
 }
 
-// when push btn-play
-// 1. music start
+function countDown() {
+  const counter = document.querySelector('.information__counter');
+  counter.textContent--;
+}
 
-// 2. place bugs and carrots
-
-// 3. timer counts down
-
-// function: erase carrot
-//1. judge clicked carrot
-
-//2. correct:
-// erase the clicked carrot
-// count down num-remain on information
+function lost() {
+  // 01. Stop Bgm & Play
+  bgm.
+}
 
 //3. incorrent:
 // clicked bug; "you lost" in notice
