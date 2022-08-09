@@ -14,8 +14,8 @@ start.addEventListener('click', () => {
   placeRandom(carrots);
   // 02. Music Start
   bgm.play();
-  // 03. count down
-  timer(10);
+  // 03. Timer start
+  timer();
 });
 
 function placeRandom(items) {
@@ -27,10 +27,18 @@ function placeRandom(items) {
   });
 }
 
-function timer(start) {
-  setInterval(() => {
-    for (let i = start, i > 0; i--) {
-      console.log(i);
+function timer() {
+  let minute = 0;
+  let sec = 9;
+  let intervalId;
+  intervalId = setInterval(() => {
+    const timer = document.querySelector('.information__timer');
+    timer.innerHTML = minute + ':' + sec;
+    if (sec == 0) {
+      clearInterval(intervalId);
+      return;
+    } else {
+      sec--;
     }
   }, 1000);
 }
