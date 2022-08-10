@@ -27,10 +27,10 @@ function placeRandom(items) {
   });
 }
 
+let intervalId;
 function timer() {
   let minute = 0;
   let sec = 9;
-  let intervalId;
   intervalId = setInterval(() => {
     const timer = document.querySelector('.information__timer');
     timer.innerHTML = minute + ':' + sec;
@@ -60,11 +60,16 @@ function countDown() {
   counter.textContent--;
 }
 
+const notice = document.querySelector('.notice');
+const noticeText = document.querySelector('.notice__text');
 function lost() {
   // 01. Stop Bgm & Play
-  bgm.
+  bgm.pause();
+  clearInterval(intervalId);
+  intervalId = null;
+  notice.style.display = 'block';
+  noticeText.textContent = 'YOU LOST 💩';
 }
-
 //3. incorrent:
 // clicked bug; "you lost" in notice
 // reload button appear
