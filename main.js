@@ -1,20 +1,22 @@
-// Start button clicked:
-const start = document.querySelector('.information__btn-play');
+const playBtn = document.querySelector('.information__btn-play');
 const bugNodes = document.querySelectorAll('[src$="bug.png"]');
 const bugs = Array.from(bugNodes);
 const carrotsNodes = document.querySelectorAll('[src$="carrot.png"]');
 const carrots = Array.from(carrotsNodes);
 const targets = document.querySelector('.targets');
-const bgm = document.querySelector('.bgm');
+const soundBgm = document.querySelector('.sound__bgm');
+const soundAlert = document.querySelector('.sound__alert');
+const soundBugPull = document.querySelector('.sound__bug-pull');
+const soundCarrotPull = document.querySelector('.sound__carrot-pull');
+const soundGameWin = document.querySelector('.sound__game-win');
+const replayBtn = document.querySelector('.notice__replay');
 
-start.addEventListener('click', () => {
-  // 01. place bugs and carrots in random posiotion
+// Start game
+playBtn.addEventListener('click', () => {
   targets.style.display = 'block';
   placeRandom(bugs);
   placeRandom(carrots);
-  // 02. Music Start
-  bgm.play();
-  // 03. Timer start
+  soundBgm.play();
   timer();
 });
 
@@ -28,12 +30,12 @@ function placeRandom(items) {
 }
 
 let intervalId;
+let minute = 0;
+let sec = 9;
+const clock = document.querySelector('.information__clock');
 function timer() {
-  let minute = 0;
-  let sec = 9;
   intervalId = setInterval(() => {
-    const timer = document.querySelector('.information__timer');
-    timer.innerHTML = minute + ':' + sec;
+    clock.textContent = minute + ':' + sec;
     if (sec == 0) {
       clearInterval(intervalId);
       return;
@@ -41,35 +43,49 @@ function timer() {
       sec--;
     }
   }, 1000);
-
-  // carrot clicked:
-  // 1. erase it
-  const area = document.querySelector('.targets');
-  area.addEventListener('click', (e) => {
-    if (carrots.includes(e.target)) {
-      e.target.remove();
-      countDown();
-    } else if (bugs.includes(e.target)) {
-      lost();
-    }
-  });
 }
 
-function countDown() {
-  const counter = document.querySelector('.information__counter');
-  counter.textContent--;
-}
+// carrot or bug clicked:
+const area = document.querySelector('.targets');
+area.addEventListener('click', (e) => {
+  if (carrots.includes(e.target)) {
+    e.target.style.display = 'none';
+    countDown();
+  } else if (bugs.includes(e.target)) {
+    lost();
+  }
+});
 
 const notice = document.querySelector('.notice');
 const noticeText = document.querySelector('.notice__text');
+
+const counter = document.querySelector('.information__counter');
+function countDown() {
+  counter.textContent--;
+  if (counter.textContent == 0) {
+    soundBgm.pause();
+    soundGameWin.play();
+    notice.style.display = 'block';
+  }
+}
+
 function lost() {
-  // 01. Stop Bgm & Play
-  bgm.pause();
+  soundBgm.pause();
+  soundBugPull.play();
   clearInterval(intervalId);
   intervalId = null;
   notice.style.display = 'block';
   noticeText.textContent = 'YOU LOST 💩';
 }
-//3. incorrent:
-// clicked bug; "you lost" in notice
-// reload button appear
+
+// Replay
+replayBtn.addEventListener('click', () => {
+  notice.style.display = 'none';
+  clock.textContent = '0:10';
+  sec = 9;
+  counter.textContent = 10;
+  placeRandom(bugs);
+  placeRandom(carrots);
+  soundBgm.play();
+  timer();
+});
