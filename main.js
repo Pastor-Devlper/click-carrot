@@ -17,9 +17,11 @@ let stage = 'ready';
 playBtn.addEventListener('click', () => {
   playStopBtnSwap();
   items.style.display = 'block';
-  if (stage == 'ready') {
+  if (stage === 'ready') {
     placeRandom(bugs);
     placeRandom(carrots);
+    stage = 'proceed';
+  } else if (stage === 'paused') {
     stage = 'proceed';
   }
   soundBgm.play();
@@ -27,10 +29,12 @@ playBtn.addEventListener('click', () => {
 });
 
 stopBtn.addEventListener('click', () => {
-  clearInterval(intervalId);
-  playStopBtnSwap();
-  soundBgm.pause();
-  stage = 'paused';
+  if (stage === 'proceed') {
+    clearInterval(intervalId);
+    playStopBtnSwap();
+    soundBgm.pause();
+    stage = 'paused';
+  }
 });
 
 // Replay
@@ -43,15 +47,17 @@ replayBtn.addEventListener('click', () => {
   placeRandom(carrots);
   soundBgm.play();
   timer();
+  stage = 'proceed';
 });
 
 // carrot or bug clicked:
 const area = document.querySelector('.items');
 area.addEventListener('click', (e) => {
-  if (carrots.includes(e.target)) {
+  if (carrots.includes(e.target) && stage === 'proceed') {
+    soundCarrotPull.play();
     e.target.style.display = 'none';
     countDown();
-  } else if (bugs.includes(e.target)) {
+  } else if (bugs.includes(e.target) && stage === 'proceed') {
     lost();
   }
 });
@@ -68,6 +74,7 @@ function playStopBtnSwap() {
 
 function placeRandom(items) {
   const innerWidth = window.innerWidth;
+  const innerHeight = window.innerHeight;
   items.forEach((element) => {
     const itemWidth = element.clientWidth;
     const itemHeight = element.clientHeight;
@@ -96,29 +103,31 @@ function timer() {
       sec--;
     }
   }, 1000);
+  return;
 }
 
 const notice = document.querySelector('.notice');
 const noticeText = document.querySelector('.notice__text');
 let counter = document.querySelector('.information__counter');
 
+let count = 10;
 function countDown() {
-  counter = document.querySelector('.information__counter');
-  if (counter.textContent == 0) {
+  // counter = document.querySelector('.information__counter');
+  counter.textContent = --count;
+  if (count == 0) {
     judge();
   }
-  counter.textContent--;
 }
 
 function judge() {
-  if (sec == 0 && counter.textContent > 0) {
-    lost();
-  } else if (sec > 0 && counter.textContent == 0) {
+  if (sec === 0 && count === 0) {
     win();
-  } else if (sec == 0 && counter.textContent == 0) {
-    win;
+  } else if (sec === 0 && count > 0) {
+    lost();
+  } else if (sec > 0 && count === 0) {
+    win();
   } else {
-    console.log(sec, counter.textContent);
+    return;
   }
 }
 
@@ -130,6 +139,7 @@ function win() {
   notice.style.display = 'block';
   noticeText.textContent = 'YOU WON 🎉';
   stage = 'ready';
+  count = 10;
 }
 
 function lost() {
@@ -139,4 +149,6 @@ function lost() {
   intervalId = null;
   notice.style.display = 'block';
   noticeText.textContent = 'YOU LOST 💩';
+  stage = 'ready';
+  count = 10;
 }
